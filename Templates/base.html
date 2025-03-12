@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+    {% block title %}{% endblock %}
+  </head>
+  <body>
+    <header>{% block header %}{% endblock %}</header>
+    {% block body %}{% endblock %}
+
+    <nav class="navbar">
+      <ul>
+        <li><h3>Gym logger</h3></li>
+        <li><a class="nav-link" href={{ url_for('index')}}>Home</a></li>
+        <li><a class="nav-link" href={{ url_for('input')}}>Input</a></li>
+        <li><a class="nav-link" href={{ url_for('visuals')}}>Visuals</a></li>
+      </ul>
+    </nav>
+
+    <main>{% block main %}{% endblock %}</main>
+  </body>
+</html>

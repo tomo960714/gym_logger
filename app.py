@@ -9,8 +9,15 @@ app = Flask(__name__)
 # Pages
 @app.route('/')
 def index():
-    return "Hello World"
+    return render_template('index.html')
 
+@app.route('/input')
+def input():
+    return render_template('input.html')
+
+@app.route('/visuals')
+def visuals():
+    return render_template('visuals.html')
 
 # Run the app
 if __name__ == '__main__':
