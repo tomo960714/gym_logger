@@ -8,11 +8,11 @@
       rel="stylesheet"
       href="{{url_for('static', filename='styles.css')}}"
     />
-    {% block title %}{% endblock %}
+    {% block head %}{% endblock %}
+    
   </head>
   <body>
     <header>{% block header %}{% endblock %}</header>
-    {% block body %}{% endblock %}
 
     <nav class="navbar">
       <ul>

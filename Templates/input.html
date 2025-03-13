@@ -1,5 +1,94 @@
 {%extends "base.html" %} {%block head%}
-<title>Homes</title>
-{%endblock%} {%block body%}
-<h1>Home</h1>
-{%endblock%}
+<script>
+  function addRow() {
+    let table = document.getElementById("weightTable");
+    let rowCount = table.rows.length;
+
+    // Insert new row BEFORE the last row (which contains the "+" button)
+    let row = table.insertRow(rowCount);
+    let cell1 = row.insertCell(0);
+    let cell2 = row.insertCell(1);
+    let cell3 = row.insertCell(2);
+
+    cell1.innerHTML = `<input type="text" name="weight[]" placeholder="Enter weight">`;
+    cell2.innerHTML = `<span>kg</span>`;
+    cell3.innerHTML = `<button type="button" onclick="removeRow(this)">✖</button>`;
+  }
+
+  function removeRow(button) {
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  }
+  function updateUnit() {
+    let exercise = document.getElementById("exercise_select").value;
+
+    fetch(`/get_unit?exercise=${exercise}`)
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("unit_display").innerText = data.unit;
+      })
+      .catch((error) => console.error("Error fetching unit:", error));
+  }
+</script>
+
+<title>Input</title>
+{%endblock%} {%block header%}
+<h1>Gym logger</h1>
+{%endblock%} {%block main%}
+<h2 class="page_title">Input your exercise here</h2>
+<form action="{{url_for('input')}}" method="post">
+  <table class="static_table">
+    <tr>
+      <th>User</th>
+      <th>Exercise</th>
+      <th>Date</th>
+    </tr>
+    <! -- https://www.w3schools.com/tags/tag_select.asp-->
+    <tr>
+      <th>
+        <select name="user_select" id="user_select">
+          <option value="user1">User 1</option>
+          <option value="user2">User 2</option>
+          <option value="user3">User 3</option>
+        </select>
+      </th>
+      <th>
+        <select
+          name="exercise_select"
+          id="exercise_select"
+          onchange="updateUnit()"
+        >
+          {% for exercise in exercises %}
+          <option value="{{exercise}}">{{exercise}}</option>
+          {%endfor%}
+        </select>
+      </th>
+      <th>
+        <input type="date" id="date" name="date" value="{{current_date}}" />
+      </th>
+    </tr>
+  </table>
+  <h3>Weight Records</h3>
+  <table class="static_table" id="weightTable">
+    <tr>
+      <th>Weight</th>
+      <th>Unit</th>
+      <th>Action</th>
+    </tr>
+    <!-- Initial row -->
+    <tr>
+      <td>
+        <input type="text" name="weight[]" placeholder="Enter weight" />
+      </td>
+      <td><span id="unit_display">kg</span></td>
+      <td><button type="button" onclick="removeRow(this)">✖</button></td>
+    </tr>
+  </table>
+
+  <div class="button_container">
+    <button type="submit" class="submit_button">Submit</button>
+    <button type="button" class="add_row_button" onclick="addRow()">+</button>
+  </div>
+
+  {%endblock%}
+</form>
