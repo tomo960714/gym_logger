@@ -13,6 +13,30 @@ main {
   margin-right: 20px;
 }
 
+.static_table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+}
+.static_table th,
+.static_table td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.button_container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.page_title {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 h1 {
   text-align: center;
 }
