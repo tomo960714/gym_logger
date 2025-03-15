@@ -1,8 +1,9 @@
-from .config import supabase
+from .config import Config
+from .supabase_client import supabase
 from .auth import db_sign_up,db_sign_in,db_sign_out
 
 
-__all__ = ["db_sign_up","db_sign_in","db_sign_out"]
+__all__ = ["db_sign_up","db_sign_in","db_sign_out","Config","supabase"]
 
 ## will be for queries to be ableto load them easily
 # from .queries import func1,func2,func3,func3

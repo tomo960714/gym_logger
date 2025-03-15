@@ -1,9 +1,9 @@
 #imports
-from flask import Flask, render_template, redirect, request, jsonify, url_for
-from db import db_sign_up,db_sign_in,db_sign_out
+from flask import Flask, render_template, redirect, request, jsonify, url_for, Blueprint
+from app.db import db_sign_up,db_sign_in,db_sign_out
 import datetime
 
-app = Flask(__name__)
+app_blueprint=Blueprint("app",__name__)
 
 ### Config ###
 
@@ -24,11 +24,11 @@ exercise_units = {
 
 ### Routes ##
 # Pages
-@app.route('/')
+@app_blueprint.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/input', methods=['GET', 'POST'])
+@app_blueprint.route('/input', methods=['GET', 'POST'])
 def input():
     current_date = datetime.date.today()
     exercises = list(exercise_units.keys())
@@ -58,18 +58,18 @@ def input():
     # Render the input page
     return render_template('input.html',exercises=exercises,current_date=current_date)
 
-@app.route('/get_unit', methods=['GET'])
+@app_blueprint.route('/get_unit', methods=['GET'])
 def get_unit():
     exercise = request.args.get("exercise", "")
     unit = exercise_units.get(exercise, "kg")  # Default to "kg" if not found
     return jsonify({"unit": unit})  # Return JSON response
 
-@app.route('/visuals')
+@app_blueprint.route('/visuals')
 def visuals():
     return render_template('visuals.html')
 
 #TODO: Make login disappear if logged in. Change it to log out.
-@app.route('/login', methods=['POST','GET'])
+@app_blueprint.route('/login', methods=['POST','GET'])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -79,7 +79,7 @@ def login():
         return redirect(url_for("index"))  # Redirect to home after login
     return render_template("login.html")
 
-@app.route('/register',methods=['POST','GET'])
+@app_blueprint.route('/register',methods=['POST','GET'])
 def register():
     if request.method == "POST":
         email = request.form.get("email")
@@ -90,11 +90,8 @@ def register():
         return redirect(url_for("register_success"))
     return render_template("register.html")
     
-@app.route('/register/success', methods=['POST',"GET"])
+@app_blueprint.route('/register/success', methods=['POST',"GET"])
 def register_success():
     return render_template("register_success.html")
 
 
-# Run the app
-if __name__ == '__main__':
-    app.run(debug=True)
