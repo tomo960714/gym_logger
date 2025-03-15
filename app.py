@@ -1,5 +1,6 @@
 #imports
-from flask import Flask, render_template, redirect, request, jsonify
+from flask import Flask, render_template, redirect, request, jsonify, url_for
+from db import db_sign_up,db_sign_in,db_sign_out
 import datetime
 
 app = Flask(__name__)
@@ -66,6 +67,33 @@ def get_unit():
 @app.route('/visuals')
 def visuals():
     return render_template('visuals.html')
+
+#TODO: Make login disappear if logged in. Change it to log out.
+@app.route('/login', methods=['POST','GET'])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        user = db_sign_in(email=email,password=password)
+        print(user)
+        return redirect(url_for("index"))  # Redirect to home after login
+    return render_template("login.html")
+
+@app.route('/register',methods=['POST','GET'])
+def register():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        username = request.form.get("username")
+        response = db_sign_up(email=email,password=password)
+        print(response)
+        return redirect(url_for("register_success"))
+    return render_template("register.html")
+    
+@app.route('/register/success', methods=['POST',"GET"])
+def register_success():
+    return render_template("register_success.html")
+
 
 # Run the app
 if __name__ == '__main__':

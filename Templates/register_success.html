@@ -1,0 +1,13 @@
+{%extends "base.html" %} {%block head%}
+<title>Register</title>
+{%endblock%} {%block header%}
+<h1>Gym logger</h1>
+{%endblock%} {%block main%}
+<div>
+  <h2>Registration succesfull</h2>
+  <p>Registration succesfull, please verify email address.</p>
+  <a href="{{url_for('index')}}">
+    <button type="button">Back</button>
+  </a>
+</div>
+{%endblock%}
