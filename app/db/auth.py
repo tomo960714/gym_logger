@@ -1,4 +1,4 @@
-from .config import supabase
+from .supabase_client import supabase
 from supabase import SupabaseException
 
 def db_sign_up(email,password):
