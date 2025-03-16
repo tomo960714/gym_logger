@@ -76,7 +76,7 @@ def login():
         password = request.form.get("password")
         user = db_sign_in(email=email,password=password)
         print(user)
-        return redirect(url_for("index"))  # Redirect to home after login
+        return redirect(url_for("app.index"))  # Redirect to home after login
     return render_template("login.html")
 
 @app_blueprint.route('/register',methods=['POST','GET'])
