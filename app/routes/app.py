@@ -87,7 +87,7 @@ def register():
         username = request.form.get("username")
         response = db_sign_up(email=email,password=password)
         print(response)
-        return redirect(url_for("register_success"))
+        return redirect(url_for("app.register_success"))
     return render_template("register.html")
     
 @app_blueprint.route('/register/success', methods=['POST',"GET"])

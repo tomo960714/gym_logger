@@ -8,4 +8,4 @@ if project_home not in sys.path:
 
 # Set the Flask app environment variable
 from app import create_app
-app = create_app()
+application = create_app()
